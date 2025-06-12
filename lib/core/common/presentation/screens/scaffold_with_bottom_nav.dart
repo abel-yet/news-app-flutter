@@ -16,6 +16,7 @@ class ScaffoldWithBottomNav extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: context.width * .05, vertical: context.width * .05),
         color: Colors.black,
         child: GNav(
+          selectedIndex: navigationShell.currentIndex,
           gap: 8,
           backgroundColor: Colors.black,
           color: Colors.white,

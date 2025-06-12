@@ -1,4 +1,5 @@
 import 'package:echo/config/theme/app_palette.dart';
+import 'package:echo/config/theme/custom_themes/input_decoration_theme.dart';
 import 'package:echo/config/theme/custom_themes/text_theme.dart';
 import 'package:echo/config/theme/theme_extension.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ abstract class AppTheme {
     scaffoldBackgroundColor: Colors.white,
     fontFamily: "Montserrat",
     textTheme: AppTextTheme.lightTextTheme,
+    inputDecorationTheme: AppInputDecorationTheme.lightInputDecorationTheme,
     extensions: [
       AppColorExtension(
         primaryColor: AppPalette.primaryColor,
@@ -37,6 +39,7 @@ abstract class AppTheme {
     scaffoldBackgroundColor: Colors.black,
     fontFamily: "Montserrat",
     textTheme: AppTextTheme.darkTExtTheme,
+    inputDecorationTheme: AppInputDecorationTheme.darkInputDecorationTheme,
     extensions: [
       AppColorExtension(
         primaryColor: AppPalette.primaryColor,

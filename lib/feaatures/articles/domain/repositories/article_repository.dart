@@ -5,4 +5,5 @@ import 'package:echo/feaatures/articles/domain/failures/failure.dart';
 
 abstract class ArticleRepository {
   Future<Either<Failure, List<ArticleEntity>>> fetchTopHeadlines({required NewsCategory category});
+  Future<Either<Failure, List<ArticleEntity>>> searchArticles({required String query});
 }

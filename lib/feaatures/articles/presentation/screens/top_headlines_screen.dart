@@ -58,7 +58,6 @@ class TopHeadlinesScreen extends StatelessWidget {
                       return Container();
                     case TopHeadlinesLoading():
                       return ListView.builder(
-                        key: ValueKey(context.theme.brightness),
                         physics: const BouncingScrollPhysics(),
                         itemCount: 10,
                         itemBuilder: (context, index) {

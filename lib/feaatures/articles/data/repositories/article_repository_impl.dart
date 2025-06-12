@@ -33,4 +33,25 @@ class ArticleRepositoryImpl implements ArticleRepository {
       return left(Failure(errorMessage: "Oops something went wrong"));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ArticleEntity>>> searchArticles({required String query}) async {
+    try {
+      final articleModels = await articleRemoteDataSource.searchArticles(query: query);
+      final articleEntities = articleModels.map((am) => am.mapToEntity()).toList();
+      return right(articleEntities);
+    } on DioException catch (e, stackTrace) {
+      if (kDebugMode) {
+        debugPrint(e.toString());
+        debugPrintStack(stackTrace: stackTrace);
+      }
+      return left(Failure(errorMessage: getDioErrorMessage(e)));
+    } catch (e, stackTrace) {
+      if (kDebugMode) {
+        debugPrint(e.toString());
+        debugPrintStack(stackTrace: stackTrace);
+      }
+      return left(Failure(errorMessage: "Oops something went wrong"));
+    }
+  }
 }
