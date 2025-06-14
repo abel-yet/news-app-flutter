@@ -23,3 +23,43 @@ class SearchArticlesUseCase {
     return articleRepository.searchArticles(query: query);
   }
 }
+
+class FetchSavedArticlesUseCase {
+  final ArticleRepository articleRepository;
+
+  FetchSavedArticlesUseCase({required this.articleRepository});
+
+  Future<Either<Failure, List<ArticleEntity>>> execute() async {
+    return articleRepository.fetchSavedArticles();
+  }
+}
+
+class SaveArticleUseCase {
+  final ArticleRepository articleRepository;
+
+  SaveArticleUseCase({required this.articleRepository});
+
+  Future<Either<Failure, Null>> execute({required ArticleEntity article}) async {
+    return articleRepository.saveArticle(article: article);
+  }
+}
+
+class RemoveArticleUseCase {
+  final ArticleRepository articleRepository;
+
+  RemoveArticleUseCase({required this.articleRepository});
+
+  Future<Either<Failure, Null>> execute({required String id}) async {
+    return articleRepository.removeArticle(id: id);
+  }
+}
+
+class RemoveAllArticlesUseCase {
+  final ArticleRepository articleRepository;
+
+  RemoveAllArticlesUseCase({required this.articleRepository});
+
+  Future<Either<Failure, Null>> execute() async {
+    return articleRepository.removeAllSavedArticles();
+  }
+}

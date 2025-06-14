@@ -1,4 +1,5 @@
 import 'package:echo/core/common/presentation/screens/scaffold_with_bottom_nav.dart';
+import 'package:echo/feaatures/articles/domain/entities/article_entity.dart';
 import 'package:echo/feaatures/articles/presentation/screens/article_screen.dart';
 import 'package:echo/feaatures/articles/presentation/screens/saved_screen.dart';
 import 'package:echo/feaatures/articles/presentation/screens/search_screen.dart';
@@ -54,10 +55,10 @@ final router = GoRouter(
     ),
     GoRoute(
       name: ArticleScreen.routName,
-      path: '/article/:url',
+      path: '/article',
       builder: (context, state) {
-        final url = state.pathParameters['url']!;
-        return ArticleScreen(articleUrl: url);
+        final article = state.extra as ArticleEntity;
+        return ArticleScreen(article: article);
       },
     ),
   ],

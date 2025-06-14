@@ -33,6 +33,18 @@ class ArticleModel extends DataMapper<ArticleEntity> {
     );
   }
 
+  factory ArticleModel.fromEntity(ArticleEntity articleEntity) {
+    return ArticleModel(
+      title: articleEntity.title,
+      description: articleEntity.description,
+      content: articleEntity.content,
+      url: articleEntity.url,
+      image: articleEntity.image,
+      publishedAt: articleEntity.publishedAt,
+      source: SourceModel.fromEntity(articleEntity.source),
+    );
+  }
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'title': title,
@@ -55,6 +67,31 @@ class ArticleModel extends DataMapper<ArticleEntity> {
       publishedAt: DateTime.parse(map['publishedAt']),
       source: SourceModel.fromMap(map['source'] as Map<String, dynamic>),
     );
+  }
+
+  factory ArticleModel.fromDB(Map<String, dynamic> map) {
+    return ArticleModel(
+      title: map['title'],
+      description: map['description'],
+      content: map['content'],
+      url: map['url'],
+      image: map['image'],
+      publishedAt: DateTime.fromMillisecondsSinceEpoch(map['published_at']),
+      source: SourceModel(name: map['source_name'], url: map['source_url']),
+    );
+  }
+
+  Map<String, dynamic> toDB() {
+    return {
+      'title': title,
+      'description': description,
+      'content': content,
+      'url': url,
+      'image': image,
+      'published_at': publishedAt.millisecondsSinceEpoch,
+      'source_name': source.name,
+      'source_url': source.url,
+    };
   }
 
   ArticleModel copyWith({
@@ -89,6 +126,10 @@ class SourceModel extends DataMapper<SourceEntity> {
   @override
   SourceEntity mapToEntity() {
     return SourceEntity(name: name, url: url);
+  }
+
+  factory SourceModel.fromEntity(SourceEntity sourceEntity) {
+    return SourceModel(name: sourceEntity.name, url: sourceEntity.url);
   }
 
   SourceModel copyWith({

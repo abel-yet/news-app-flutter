@@ -1,5 +1,4 @@
 import 'package:echo/core/utils/extnesions.dart';
-import 'package:echo/core/utils/helper_functions.dart';
 import 'package:echo/feaatures/articles/presentation/blocs/search_articles/search_articles_bloc.dart';
 import 'package:echo/feaatures/articles/presentation/widgets/article_card.dart';
 import 'package:flutter/material.dart';
@@ -67,17 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
             // Search Result
             Expanded(
-              child: BlocConsumer<SearchArticlesBloc, SearchArticlesState>(
-                listener: (context, state) {
-                  if (state is SearchArticlesError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      buildSnackbar(
-                        message: state.errorMessage,
-                        isError: true,
-                      ),
-                    );
-                  }
-                },
+              child: BlocBuilder<SearchArticlesBloc, SearchArticlesState>(
                 builder: (context, state) {
                   switch (state) {
                     case SearchArticlesInitial():
@@ -96,7 +85,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ArticleCard.loading(context);
+                          return Container(
+                            margin: EdgeInsets.only(bottom: context.width * .06),
+                            child: ArticleCard.loading(context),
+                          );
                         },
                       );
                     case SearchArticlesFetched():
@@ -104,7 +96,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: state.articles.length,
                         itemBuilder: (context, index) {
-                          return ArticleCard(articleEntity: state.articles[index]);
+                          return Container(
+                            margin: EdgeInsets.only(bottom: context.width * .06),
+                            child: ArticleCard(articleEntity: state.articles[index]),
+                          );
                         },
                       );
                     case SearchArticlesError():
@@ -112,7 +107,10 @@ class _SearchScreenState extends State<SearchScreen> {
                         physics: const BouncingScrollPhysics(),
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ArticleCard.error(context);
+                          return Container(
+                            margin: EdgeInsets.only(bottom: context.width * .06),
+                            child: ArticleCard.error(context),
+                          );
                         },
                       );
                   }

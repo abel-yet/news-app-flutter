@@ -2,6 +2,7 @@ import 'package:echo/config/routing/router.dart';
 import 'package:echo/config/theme/theme.dart';
 import 'package:echo/core/dependency_injection.dart';
 import 'package:echo/feaatures/articles/presentation/blocs/news_category/news_category_cubit.dart';
+import 'package:echo/feaatures/articles/presentation/blocs/saved_articles/saved_articles_bloc.dart';
 import 'package:echo/feaatures/articles/presentation/blocs/search_articles/search_articles_bloc.dart';
 import 'package:echo/feaatures/articles/presentation/blocs/top_headlines/top_headlines_bloc.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,12 @@ class Echo extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<SearchArticlesBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<SavedArticlesBloc>()
+            ..add(
+              FetchSavedArticlesEvent(),
+            ),
         ),
       ],
       child: MaterialApp.router(

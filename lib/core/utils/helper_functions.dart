@@ -61,7 +61,7 @@ Widget shimmerContainer({
 
 SnackBar buildSnackbar({
   required String message,
-  required bool isError,
+  bool isError = false,
 }) {
   return SnackBar(
     backgroundColor: isError ? AppPalette.errorColor : AppPalette.successColor,

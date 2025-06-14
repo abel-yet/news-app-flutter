@@ -10,9 +10,8 @@ class ArticleCard extends StatelessWidget {
   const ArticleCard({super.key, required this.articleEntity});
 
   static Widget loading(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: context.width * .3,
-      margin: EdgeInsets.only(bottom: context.width * .06),
       child: Row(
         spacing: context.width * .04,
         children: [
@@ -34,9 +33,8 @@ class ArticleCard extends StatelessWidget {
   }
 
   static Widget error(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: context.width * .3,
-      margin: EdgeInsets.only(bottom: context.width * .06),
       child: Row(
         spacing: context.width * .04,
         children: [
@@ -69,71 +67,68 @@ class ArticleCard extends StatelessWidget {
       onTap: () {
         context.pushNamed(
           ArticleScreen.routName,
-          pathParameters: {
-            "url": articleEntity.url,
-          },
+          extra: articleEntity,
         );
       },
-      child: Container(
-        margin: EdgeInsets.only(bottom: context.width * .06),
-        child: Row(
-          spacing: context.width * .04,
-          children: [
-            // Image
-            ClipRRect(
-              borderRadius: BorderRadius.circular(6),
-              child: Image.network(
-                articleEntity.image,
-                height: context.width * .3,
-                width: context.width * .3,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: context.width * .3,
-                    height: context.width * .3,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                  );
-                },
-              ),
+      child: Row(
+        spacing: context.width * .04,
+        children: [
+          // Image
+          ClipRRect(
+            borderRadius: BorderRadius.circular(6),
+            child: Image.network(
+              articleEntity.image,
+              height: context.width * .3,
+              width: context.width * .3,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  width: context.width * .3,
+                  height: context.width * .3,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                );
+              },
             ),
-
-            Expanded(
-              child: Column(
-                spacing: context.width * .02,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Source name
-                  Text(
-                    articleEntity.source.name,
-                    style: TextStyle(color: context.theme.appColors.accentColor, fontSize: 10, fontWeight: FontWeight.w900),
+          ),
+      
+          Expanded(
+            child: Column(
+              spacing: context.width * .02,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Source name
+                Text(
+                  articleEntity.source.name,
+                  style: TextStyle(color: context.theme.appColors.accentColor, fontSize: 10, fontWeight: FontWeight.w900),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+      
+                // Title
+                Text(
+                  articleEntity.title,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12),
+                ),
+      
+                // Date
+                Text(
+                  articleEntity.publishedAt.formattedDate(),
+                  style: TextStyle(
+                    fontSize: 8,
+                    fontWeight: FontWeight.w500,
+                    color: context.theme.brightness == Brightness.dark ? Colors.grey.shade300 : Colors.grey.shade700,
                   ),
-
-                  // Title
-                  Text(
-                    articleEntity.title,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 12),
-                  ),
-
-                  // Date
-                  Text(
-                    articleEntity.publishedAt.formattedDate(),
-                    style: TextStyle(
-                      fontSize: 8,
-                      fontWeight: FontWeight.w500,
-                      color: context.theme.brightness == Brightness.dark ? Colors.grey.shade300 : Colors.grey.shade700,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

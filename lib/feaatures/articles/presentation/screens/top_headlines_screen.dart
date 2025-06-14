@@ -1,6 +1,5 @@
 import 'package:echo/core/enums/news_category_enum.dart';
 import 'package:echo/core/utils/extnesions.dart';
-import 'package:echo/core/utils/helper_functions.dart';
 import 'package:echo/feaatures/articles/presentation/blocs/news_category/news_category_cubit.dart';
 import 'package:echo/feaatures/articles/presentation/blocs/top_headlines/top_headlines_bloc.dart';
 import 'package:echo/feaatures/articles/presentation/widgets/article_card.dart';
@@ -41,17 +40,7 @@ class TopHeadlinesScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: context.width * .05),
-              child: BlocConsumer<TopHeadlinesBloc, TopHeadlinesState>(
-                listener: (context, state) {
-                  if (state is TopHeadlinesError) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      buildSnackbar(
-                        message: state.errorMessage,
-                        isError: true,
-                      ),
-                    );
-                  }
-                },
+              child: BlocBuilder<TopHeadlinesBloc, TopHeadlinesState>(
                 builder: (context, state) {
                   switch (state) {
                     case TopHeadlinesInitial():
@@ -61,7 +50,10 @@ class TopHeadlinesScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ArticleCard.loading(context);
+                          return Container(
+                            margin: EdgeInsets.only(bottom: context.width * .06),
+                            child: ArticleCard.loading(context),
+                          );
                         },
                       );
                     case TopHeadlinesFetched():
@@ -69,7 +61,10 @@ class TopHeadlinesScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         itemCount: state.articles.length,
                         itemBuilder: (context, index) {
-                          return ArticleCard(articleEntity: state.articles[index]);
+                          return Container(
+                            margin: EdgeInsets.only(bottom: context.width * .06),
+                            child: ArticleCard(articleEntity: state.articles[index]),
+                          );
                         },
                       );
                     case TopHeadlinesError():
@@ -77,7 +72,10 @@ class TopHeadlinesScreen extends StatelessWidget {
                         physics: const BouncingScrollPhysics(),
                         itemCount: 10,
                         itemBuilder: (context, index) {
-                          return ArticleCard.error(context);
+                          return Container(
+                            margin: EdgeInsets.only(bottom: context.width * .06),
+                            child: ArticleCard.error(context),
+                          );
                         },
                       );
                   }
