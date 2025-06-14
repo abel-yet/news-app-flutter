@@ -45,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 suffixIcon: GestureDetector(
                   onTap: () {
                     if (_textEditingController.text.isNotEmpty) {
-                      context.read<SearchArticlesBloc>().add(SearchArticlesEvent(query: _textEditingController.text));
+                      context.read<SearchArticlesBloc>().add(SearchArticlesEvent(query: _textEditingController.text.trim()));
                     }
                   },
                   child: Icon(
@@ -59,7 +59,7 @@ class _SearchScreenState extends State<SearchScreen> {
               },
               onSubmitted: (value) {
                 if (value.isNotEmpty) {
-                  context.read<SearchArticlesBloc>().add(SearchArticlesEvent(query: value));
+                  context.read<SearchArticlesBloc>().add(SearchArticlesEvent(query: value.trim()));
                 }
               },
             ),
